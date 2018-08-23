@@ -345,13 +345,14 @@ public class NoteController {
 	 *             </p>
 	 ********************************************************************************************************/
 	@GetMapping(value = "/displaylabel")
-	public ResponseEntity displayLabel(@RequestHeader("token") String token,HttpServletRequest request) throws TodoException {
+	public ResponseEntity displayLabel(@RequestHeader("token") String token,@RequestParam boolean descORasc,HttpServletRequest request) throws TodoException {
 		LOG.debug("displaying label");
 		LOG.info(REQ_ID);
 		LOG.info("displaying label");
 		String userId=(String) request.getAttribute("userId");
 		List label = null;
-		label = noteService.displayLabels(userId);
+		label = noteService.displayLabels(userId
+				,descORasc);
 		LOG.info(REs_ID);
 		LOG.info("displayed label successfully");
 		return new ResponseEntity<>(label, HttpStatus.OK);

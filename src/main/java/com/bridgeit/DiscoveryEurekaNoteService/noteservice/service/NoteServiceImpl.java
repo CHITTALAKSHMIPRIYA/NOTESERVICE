@@ -5,11 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -359,13 +361,19 @@ public class NoteServiceImpl implements INoteService {
 	 *             </p>
 	 ***************************************************************************************************/
 	@Override
-	public List<Label> displayLabels(String userId) throws TodoException {
+	public List<Label> displayLabels(String userId,boolean descORasc) throws TodoException {
 		List<Label> list = new ArrayList<>();
 		list = ilabel.findAll();
-		Collections.sort(list, (label1, label2) -> {
+		
+		if(descORasc) {
+	/*Collections.sort(list, (label1, label2) -> {
 			return label1.getLabelName().compareTo(label2.getLabelName());
-		});
-		return list;
+		});*/
+			return list.stream().sorted(Comparator.comparing(Label::getLabelName)).collect(Collectors.toList());
+}
+		else		
+			return list.stream().sorted(Comparator.comparing(Label::getLabelName).reversed()).collect(Collectors.toList());
+		
 	}
 
 	/****************************************************************************************************
@@ -519,4 +527,6 @@ public class NoteServiceImpl implements INoteService {
 		return optionalNote;
 
 	}
+
+	
 }

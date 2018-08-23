@@ -152,7 +152,7 @@ public interface INoteService {
 	 *             <b>Displaying List of labels</b>
 	 *             </p>
 	 */
-	List<Label> displayLabels(String token1) throws TodoException;
+	//List<Label> displayLabels(String userId) throws TodoException;
 
 	/**
 	 * @param note
@@ -218,5 +218,14 @@ public interface INoteService {
 	 *             </p>
 	 */
 	Optional<Note> addimageToNote(String url, String userId, String noteId) throws IOException;
+
+	/**
+	 * @param userId
+	 * @param descORasc
+	 * @return
+	 * @throws TodoException
+	 */
+	List<Label> displayLabels(String userId, boolean descORasc) throws TodoException;
+
 
 }
